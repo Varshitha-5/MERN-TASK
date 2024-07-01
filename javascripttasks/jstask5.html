@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .abc{
+            height:75px;
+        }
+        .a{
+            padding-top: 1px;
+        }
+        .error {
+    color: red;
+    margin-left: 10px;
+}
+    </style>
+</head>
+<body>
+    <form>
+        <table>
+            <tr>
+                <td for="name">Name:</td>
+                <td><input type="text" id="name"></td>
+                <td><span class="error" id="nameError"></span></td>
+            </tr>
+            <tr>
+                <td><label for="email">Email:</label></td>
+                <td><input type="email" id="email"></td>
+                <td> <span class="error" id="emailError"></span></td>
+            </tr>
+            <tr>
+                <td><label for="website">Website:</label></td>
+                <td><input type="text" id="website"></td>
+                <td><span class="error" id="urlerror"></span></td>
+            </tr>
+            <tr class="a">
+                <td><label for="msg" >Message:</label></td>
+                <td><input type="text" id="msg" class="abc"></td>
+                <td><span class="error" id="msgerror"></span></td>
+            </tr>
+        </table>
+        <button style="margin-left: 50px;">Submit</button>
+    </form>
+    <script>
+    document.querySelector('form').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    document.getElementById('nameError').textContent = '';
+    document.getElementById('emailError').textContent = '';
+    document.getElementById('urlerror').textContent = '';
+    document.getElementById('msgerror').textContent = '';
+
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const website = document.getElementById('website').value;
+    const message = document.getElementById('msg').value;
+
+    if (name === '') {
+        document.getElementById('nameError').textContent = 'This field is required';
+        valid = false;
+    }
+
+    if (email === '') {
+        document.getElementById('emailError').textContent = 'A valid email address is required';
+        valid = false;
+    } else if (!validateEmail(email)) {
+        document.getElementById('emailError').textContent = 'A valid email address is required';
+        valid = false;
+    }
+
+    if (website === '') {
+        document.getElementById('urlerror').textContent = 'A valid url is required';
+        valid = false;
+    } else if (!validateURL(website)) {
+        document.getElementById('urlerror').textContent = 'A valid url is required';
+        valid = false;
+    }
+
+    if (message === '') {
+        document.getElementById('msgerror').textContent = 'This field is required';
+        valid = false;
+    }
+
+    if (valid) {
+        // Form is valid, you can submit it or perform other actions
+        alert('Form submitted successfully');
+        // e.g., document.querySelector('form').submit();
+    }
+});
+
+function validateEmail(email) {
+    const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return re.test(String(email).toLowerCase());
+}
+
+function validateURL(url) {
+    const re = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/;
+    return re.test(String(url).toLowerCase());
+}
+    </script>
+</body>
+</html>
